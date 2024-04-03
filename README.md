@@ -15,7 +15,7 @@
    ```
 2. Распакуйте архив
    ```bash
-   unzip main.py
+   unzip main.zip
    ```
 3. Перейдите в директорию со скриптом
    ```bash
@@ -23,7 +23,7 @@
    ```
 4. Запустите скрипт.
    ```bash
-   sudo ./bot_installer.sh
+   sudo bash bot_installer.sh
    ```
 5. Укажите путь до файла main.py.
 6. Укажите путь до файла requirements.txt (если необходимо).
