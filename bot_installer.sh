@@ -167,14 +167,18 @@ if [ -n "$requirements_path" ]; then
     echo
 fi
 
+read -p "Желаете добавить быстрые команды для управления сервером (server-start; server-stop; server-restart) (y)/n" quick_start_answer
+if [ -n "$quick_start_answer" ] || [ "$quick_start_answer" == "y" ]; then
+    echo "alias server-start='pm2 start $main_path --interpreter python3 --name bot'" >> ~/.bashrc && echo "alias server-stop='pm2 stop bot'" >> ~/.bashrc && echo "alias server-restart='pm2 stop bot && pm2 start $main_path --interpreter python3 --name bot'" >> ~/.bashrc
+fi
 
 echo "Все необходимые компоненты и пакеты установлены."
 echo
-read -p "Желаете запустить бота? (y/n): " answer
+read -p "Желаете запустить бота? (y)/n: " exit_answer
 
-if [ "$answer" == "y" ]; then
+if [ -n "$exit_answer" ] || [ "$exit_answer" == "y" ]; then
     pm2 start -f "$main_path" --interpreter python3 --name bot
-elif [ "$answer" == "n" ]; then
+elif [ "$exit_answer" == "n" ]; then
     echo "Выход из программы."
     exit 0
 else
