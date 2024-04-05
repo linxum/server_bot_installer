@@ -57,6 +57,15 @@ install_python3_via_apt() {
         sudo apt install -y python3 >/dev/null 2>&1
         show_progress $! &
     fi
+
+    if command -v pip3 &>/dev/null; then
+        echo "pip3 уже установлен."
+    else
+        echo "pip3 не установлен. Выполняем установку "
+        sudo apt update >/dev/null 2>&1
+        sudo apt install -y python3-pip >/dev/null 2>&1
+        show_progress $! &
+    fi
 }
 
 # Функция для установки Python3 через YUM
@@ -68,6 +77,14 @@ install_python3_via_yum() {
         sudo yum install -y python3 >/dev/null 2>&1
         show_progress $! &
     fi
+
+        if command -v pip3 &>/dev/null; then
+        echo "pip3 уже установлен."
+    else
+        echo "pip3 не установлен. Выполняем установку "
+        sudo yum install -y python3-pip >/dev/null 2>&1
+        show_progress $! &
+    fi
 }
 
 # Функция для установки Python3 через Zypper
@@ -77,6 +94,14 @@ install_python3_via_zypper() {
     else
         echo "Python3 не установлен. Выполняем установку "
         sudo zypper install -y python3 >/dev/null 2>&1
+        show_progress $! &
+    fi
+
+    if command -v pip3 &>/dev/null; then
+        echo "pip3 уже установлен."
+    else
+        echo "pip3 не установлен. Выполняем установку "
+        sudo zypper install -y python3-pip >/dev/null 2>&1
         show_progress $! &
     fi
 }
@@ -156,5 +181,3 @@ else
     echo "Некорректный ответ. Выход из программы."
     exit 0
 fi
-
-
