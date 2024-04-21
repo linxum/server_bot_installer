@@ -47,6 +47,16 @@ install_node_via_zypper() {
     fi 
 }
 
+install_node_via_pacman() {
+    if command -v node &>/dev/null && command -v npm &>/dev/null; then
+        echo "Node.js и npm уже установлены."
+    else
+        echo "Node.js и npm не установлены. Выполняем установку "
+        sudo pacman -Sy nodejs npm --noconfirm >/dev/null 2>&1
+        show_progress $! &
+    fi
+}
+
 # Функция для установки Python3 через APT
 install_python3_via_apt() {
     if command -v python3 &>/dev/null; then
@@ -106,6 +116,24 @@ install_python3_via_zypper() {
     fi
 }
 
+install_python3_via_pacman() {
+    if command -v python3 &>/dev/null; then
+        echo "Python3 уже установлен."
+    else
+        echo "Python3 не установлен. Выполняем установку "
+        sudo pacman -Sy python3 --noconfirm >/dev/null 2>&1
+        show_progress $! &
+    fi
+
+    if command -v pip3 &>/dev/null; then
+        echo "pip3 уже установлен."
+    else
+        echo "pip3 не установлен. Выполняем установку "
+        sudo pacman -Sy python-pip --noconfirm >/dev/null 2>&1
+        show_progress $! &
+    fi
+}
+
 # Проверка, установлен ли pm2 через npm
 check_pm2_installed() {
     if npm list -g pm2 &>/dev/null; then
@@ -120,12 +148,12 @@ check_pm2_installed() {
 echo
 echo
 echo
-echo " _             _     _              _           _  _"
+echo " _             _     _              _           _  _ "
 echo "| |__    ___  | |_  (_) _ __   ___ | |_   __ _ | || |  ___  _ __"
-echo "| '_ \  / _ \ | __| | || '_ \ / __|| __| / _` || || | / _ \| '__|"
+echo "| '_ \  / _ \ | __| | || '_ \ / __|| __| / _\` || || | / _ \| '__|"
 echo "| |_) || (_) || |_  | || | | |\__ \| |_ | (_| || || ||  __/| |"
 echo "|_.__/  \___/  \__| |_||_| |_||___/ \__| \__,_||_||_| \___||_|"
-echo
+echo 
 echo
 echo
 echo "Данный скрипт установит необходимые компоненты и пакеты для работы сервера бота, написаного на Python"
@@ -157,6 +185,13 @@ elif command -v zypper &> /dev/null; then
     echo
     echo
     install_python3_via_zypper
+    echo
+    echo
+elif command -v pacman &> /dev/null; then
+    install_node_via_pacman
+    echo
+    echo
+    install_python3_via_pacman
     echo
     echo
 else
